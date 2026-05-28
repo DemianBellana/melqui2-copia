@@ -1,6 +1,7 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
-export default function Hero({ data }) {
+export default function Hero({ data, images }) {
   return (
     <section className="relative min-h-screen flex items-center px-6 md:px-14 py-24 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-[#F7F3EF] z-10" />
@@ -14,6 +15,43 @@ export default function Hero({ data }) {
       >
         <source src={data.mainVideo} type="video/mp4" />
       </video>
+
+      {/* FLOATING BACKGROUND CARDS */}
+      {images && (
+        <div className="absolute inset-0 z-[5] overflow-hidden pointer-events-none opacity-40 mix-blend-overlay">
+          {images.slice(0, 6).map((img, i) => {
+            const size = 200 + (i % 3) * 50;
+            const leftPos = [5, 25, 45, 65, 80, 15][i % 6];
+            const duration = 20 + i * 5;
+            const delay = i * -8;
+
+            return (
+              <motion.img
+                key={i}
+                src={img}
+                alt=""
+                className="absolute rounded-[2rem] object-cover shadow-2xl"
+                style={{
+                  width: size,
+                  height: size * 1.3,
+                  left: `${leftPos}%`,
+                  bottom: '-50%'
+                }}
+                animate={{
+                  y: ['0vh', '-150vh'],
+                  rotate: [0, i % 2 === 0 ? 5 : -5]
+                }}
+                transition={{
+                  duration: duration,
+                  ease: 'linear',
+                  repeat: Infinity,
+                  delay: delay
+                }}
+              />
+            );
+          })}
+        </div>
+      )}
 
       <div className="relative z-20 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-end">
         <div className="space-y-8">

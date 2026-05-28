@@ -3,6 +3,7 @@ import { portfolioData } from './data/portfolio';
 import Hero from './components/Hero';
 import ProjectGrid from './components/ProjectGrid';
 import ExperienceCard from './components/ExperienceCard';
+import ScatteredGallery from './components/ScatteredGallery';
 
 export default function MelisaQuirogaPortfolio() {
   const { personal, hero, reels, videoWork, photography, experience, socials } = portfolioData;
@@ -30,7 +31,7 @@ export default function MelisaQuirogaPortfolio() {
       </div>
 
       {/* HERO */}
-      <Hero data={hero} />
+      <Hero data={hero} images={photography.images} />
 
       {/* REELS SECTION */}
       <section className="relative py-32 px-6 md:px-14 bg-[#F7F3EF]">
