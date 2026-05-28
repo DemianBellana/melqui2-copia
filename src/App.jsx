@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { portfolioData } from './data/portfolio';
 import Hero from './components/Hero';
 import ProjectGrid from './components/ProjectGrid';
 import ExperienceCard from './components/ExperienceCard';
 import ScatteredGallery from './components/ScatteredGallery';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function MelisaQuirogaPortfolio() {
   const { personal, hero, reels, videoWork, photography, experience, socials } = portfolioData;
+  const [selectedImage, setSelectedImage] = useState(null);
 
   return (
     <div className="min-h-screen bg-[#F7F3EF] text-[#161616] overflow-x-hidden selection:bg-[#CFA8A1]/30">
@@ -150,9 +152,11 @@ export default function MelisaQuirogaPortfolio() {
 
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
             {photography.images.map((img, i) => (
-              <div
+              <motion.div
                 key={i}
-                className="relative overflow-hidden rounded-[2rem] group break-inside-avoid"
+                layoutId={`img-${i}`}
+                onClick={() => setSelectedImage({ url: img, id: i })}
+                className="relative overflow-hidden rounded-[2rem] group break-inside-avoid cursor-pointer"
               >
                 <img
                   src={img}
@@ -161,11 +165,51 @@ export default function MelisaQuirogaPortfolio() {
                 />
 
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-700" />
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* LIGHTBOX / IMAGE EXPANSION */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 pointer-events-auto"
+          >
+            {/* Backdrop with blur */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedImage(null)}
+              className="absolute inset-0 bg-[#F7F3EF]/60 backdrop-blur-2xl"
+            />
+
+            {/* Expanded Image Container */}
+            <motion.div
+              layoutId={`img-${selectedImage.id}`}
+              className="relative z-10 w-full max-w-6xl aspect-[4/5] md:aspect-auto md:h-[85vh] rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.2)]"
+            >
+              <img 
+                src={selectedImage.url} 
+                className="w-full h-full object-cover md:object-contain bg-[#161616]/5"
+                alt=""
+              />
+              
+              <button 
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-[#161616] hover:bg-white/20 transition-colors"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ABOUT */}
       <section className="py-32 px-6 md:px-14 bg-[#F7F3EF]">
