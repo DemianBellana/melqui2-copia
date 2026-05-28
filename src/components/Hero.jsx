@@ -18,11 +18,11 @@ export default function Hero({ data, images }) {
 
       {/* FLOATING BACKGROUND CARDS */}
       {images && (
-        <div className="absolute inset-0 z-[5] overflow-hidden pointer-events-none opacity-40 mix-blend-overlay">
+        <div className="absolute inset-0 z-[15] overflow-hidden pointer-events-none opacity-80">
           {images.slice(0, 6).map((img, i) => {
             const size = 200 + (i % 3) * 50;
-            const leftPos = [5, 25, 45, 65, 80, 15][i % 6];
-            const duration = 20 + i * 5;
+            const topPos = [5, 25, 45, 55, 70, 15][i % 6];
+            const duration = 25 + i * 5;
             const delay = i * -8;
 
             return (
@@ -34,11 +34,11 @@ export default function Hero({ data, images }) {
                 style={{
                   width: size,
                   height: size * 1.3,
-                  left: `${leftPos}%`,
-                  bottom: '-50%'
+                  top: `${topPos}%`,
+                  left: '-30vw'
                 }}
                 animate={{
-                  y: ['0vh', '-150vh'],
+                  x: ['0vw', '140vw'],
                   rotate: [0, i % 2 === 0 ? 5 : -5]
                 }}
                 transition={{
@@ -70,17 +70,16 @@ export default function Hero({ data, images }) {
 
           <div className="max-w-xl space-y-6">
             <p className="text-lg md:text-xl text-white/80 leading-relaxed font-light">
-              Video Editor & Content Creator crafting emotional visuals,
-              cinematic storytelling and modern digital experiences.
+              Editor de Video y Creador de Contenido creando piezas visuales emocionales, narrativa cinemática y experiencias digitales modernas.
             </p>
 
             <div className="flex gap-4 flex-wrap">
               <button className="px-7 py-4 rounded-full bg-[#161616] hover:bg-[#161616]/90 transition-all duration-500 text-[#F7F3EF] text-sm tracking-[0.25em] uppercase">
-                Explore Work
+                Explorar Trabajo
               </button>
 
               <button className="px-7 py-4 rounded-full border border-white/30 bg-white/10 backdrop-blur-xl hover:bg-white/20 transition-all duration-500 text-white text-sm tracking-[0.25em] uppercase">
-                Contact
+                Contacto
               </button>
             </div>
           </div>
@@ -102,10 +101,10 @@ export default function Hero({ data, images }) {
 
             <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
               <p className="text-xs tracking-[0.35em] uppercase text-white/60 mb-3">
-                Selected Frames
+                Fotogramas Seleccionados
               </p>
               <h3 className="text-2xl font-light leading-snug">
-                Cinematic editing with editorial aesthetics.
+                Edición cinemática con estética editorial.
               </h3>
             </div>
           </div>
@@ -113,7 +112,7 @@ export default function Hero({ data, images }) {
       </div>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-white/60 text-xs tracking-[0.3em] uppercase animate-bounce">
-        Scroll
+        Deslizar
       </div>
     </section>
   );

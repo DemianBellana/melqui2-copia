@@ -71,7 +71,7 @@ export default function MelisaQuirogaPortfolio() {
                   {reels.label}
                 </p>
                 <h3 className="text-4xl font-light max-w-2xl leading-tight">
-                  Fast-paced edits with luxury editorial aesthetics.
+                  Ediciones dinámicas con estética editorial de lujo.
                 </h3>
               </div>
 
@@ -107,10 +107,10 @@ export default function MelisaQuirogaPortfolio() {
         <div className="max-w-7xl mx-auto">
           <div className="mb-20">
             <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6">
-              Experience
+              Experiencia
             </p>
             <h2 className="text-5xl md:text-7xl font-light tracking-[-0.05em] leading-[0.92] max-w-4xl">
-              Professional journey in cinematic editing.
+              Trayectoria profesional en edición cinemática.
             </h2>
           </div>
 
@@ -182,11 +182,11 @@ export default function MelisaQuirogaPortfolio() {
 
           <div>
             <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6">
-              About Me
+              Sobre Mí
             </p>
 
             <h2 className="text-5xl md:text-7xl font-light tracking-[-0.05em] leading-[0.95] mb-10">
-              Visual storytelling with emotion and cinematic sensitivity.
+              Narrativa visual con emoción y sensibilidad cinemática.
             </h2>
 
             <div className="space-y-6 text-lg text-[#161616]/70 leading-relaxed">
@@ -197,11 +197,11 @@ export default function MelisaQuirogaPortfolio() {
 
             <div className="mt-10 flex gap-4 flex-wrap">
               <button className="px-7 py-4 rounded-full bg-[#161616] text-white hover:bg-black transition-all duration-500 text-sm tracking-[0.25em] uppercase">
-                Download Portfolio
+                Descargar Portafolio
               </button>
 
               <button className="px-7 py-4 rounded-full border border-black/10 bg-white hover:bg-[#EFE7E2] transition-all duration-500 text-sm tracking-[0.25em] uppercase">
-                Let’s Talk
+                Hablemos
               </button>
             </div>
           </div>
@@ -214,16 +214,15 @@ export default function MelisaQuirogaPortfolio() {
 
         <div className="relative max-w-5xl mx-auto text-center">
           <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6">
-            Contact
+            Contacto
           </p>
 
           <h2 className="text-5xl md:text-7xl font-light tracking-[-0.05em] leading-[0.92] mb-10">
-            Let’s create something visually unforgettable.
+            Creemos algo visualmente inolvidable.
           </h2>
 
           <p className="text-white/70 text-lg max-w-2xl mx-auto mb-14 leading-relaxed">
-            Available for creative collaborations, brand content, cinematic
-            editing and visual storytelling projects worldwide.
+            Disponible para colaboraciones creativas, contenido de marca, edición cinemática y proyectos de narrativa visual a nivel mundial.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-20">
@@ -241,23 +240,23 @@ export default function MelisaQuirogaPortfolio() {
 
           <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6 text-left">
             <input
-              placeholder="Your Name"
+              placeholder="Tu Nombre"
               className="bg-white/5 border border-white/10 rounded-2xl px-6 py-5 outline-none backdrop-blur-xl"
             />
 
             <input
-              placeholder="Your Email"
+              placeholder="Tu Correo"
               className="bg-white/5 border border-white/10 rounded-2xl px-6 py-5 outline-none backdrop-blur-xl"
             />
 
             <textarea
-              placeholder="Tell me about your project"
+              placeholder="Contame sobre tu proyecto"
               rows={6}
               className="md:col-span-2 bg-white/5 border border-white/10 rounded-[2rem] px-6 py-5 outline-none backdrop-blur-xl"
             />
 
             <button className="md:col-span-2 px-8 py-5 rounded-full bg-[#D8B7B0] hover:bg-[#CFA8A1] transition-all duration-500 text-[#161616] text-sm tracking-[0.25em] uppercase">
-              Send Inquiry
+              Enviar Consulta
             </button>
           </div>
         </div>
@@ -266,7 +265,7 @@ export default function MelisaQuirogaPortfolio() {
       {/* FOOTER */}
       <footer className="px-6 md:px-14 py-10 bg-[#161616] border-t border-white/5 text-white/40 text-sm tracking-[0.2em] uppercase flex flex-col md:flex-row justify-between gap-4">
         <div>© {personal.name}</div>
-        <div>by CodeNoFrontier</div>
+        <div>por CodeNoFrontier</div>
       </footer>
 
       <style>{`

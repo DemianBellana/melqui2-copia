@@ -1,12 +1,12 @@
 export const portfolioData = {
   personal: {
     name: "Melisa Quiroga",
-    role: "Creative Direction",
-    tagline: "Video Editor & Content Creator crafting emotional visuals, cinematic storytelling and modern digital experiences.",
+    role: "Dirección Creativa",
+    tagline: "Editor de Video y Creador de Contenido creando piezas visuales emocionales, narrativa cinemática y experiencias digitales modernas.",
     bio: [
-      "I create modern audiovisual experiences combining cinematic editing, emotional storytelling and editorial aesthetics.",
-      "My work focuses on creating impactful content that feels artistic, immersive and visually unforgettable.",
-      "Every frame is designed with rhythm, atmosphere and strong visual identity."
+      "Creo experiencias audiovisuales modernas combinando edición cinemática, narrativa emocional y estética editorial.",
+      "Mi trabajo se centra en crear contenido impactante que se sienta artístico, inmersivo y visualmente inolvidable.",
+      "Cada fotograma está diseñado con ritmo, atmósfera y una fuerte identidad visual."
     ]
   },
   hero: {
@@ -16,46 +16,46 @@ export const portfolioData = {
       first: "Melisa",
       last: "Quiroga"
     },
-    subtitle: "Cinematic Portfolio"
+    subtitle: "Portafolio Cinemático"
   },
   reels: {
-    title: "Reels crafted with rhythm, motion and cinematic emotion.",
-    description: "Dynamic cuts, visual storytelling and premium pacing designed for impactful social media experiences.",
+    title: "Reels creados con ritmo, movimiento y emoción cinemática.",
+    description: "Cortes dinámicos, narrativa visual y ritmo premium diseñados para experiencias impactantes en redes sociales.",
     showcaseVideo: "/videos/reels-showcase.mp4",
-    tag: "Featured Editing",
-    label: "Main Reel",
-    cta: "Play Reel"
+    tag: "Edición Destacada",
+    label: "Reel Principal",
+    cta: "Reproducir Reel"
   },
   videoWork: {
-    tag: "Video Work",
-    title: "Creative visual direction across multiple cinematic formats.",
+    tag: "Trabajo de Video",
+    title: "Dirección visual creativa a través de múltiples formatos cinemáticos.",
     items: [
       {
-        title: "Social Media",
-        description: "Premium cinematic editing with modern storytelling and elegant visual composition.",
+        title: "Redes Sociales",
+        description: "Edición cinemática premium con narrativa moderna y composición visual elegante.",
         image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1400&auto=format&fit=crop"
       },
       {
-        title: "Storytelling",
-        description: "Premium cinematic editing with modern storytelling and elegant visual composition.",
+        title: "Narrativa",
+        description: "Edición cinemática premium con narrativa moderna y composición visual elegante.",
         image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1400&auto=format&fit=crop"
       },
       {
-        title: "Drone",
-        description: "Premium cinematic editing with modern storytelling and elegant visual composition.",
+        title: "Dron",
+        description: "Edición cinemática premium con narrativa moderna y composición visual elegante.",
         image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1400&auto=format&fit=crop"
       },
       {
-        title: "Talking Head",
-        description: "Premium cinematic editing with modern storytelling and elegant visual composition.",
+        title: "Entrevistas",
+        description: "Edición cinemática premium con narrativa moderna y composición visual elegante.",
         image: "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?q=80&w=1400&auto=format&fit=crop"
       }
     ]
   },
   photography: {
-    tag: "Photography",
-    title: "Editorial moments through still cinematic frames.",
-    categories: ['Lifestyle', 'Sports', 'Travel', 'Portraits'],
+    tag: "Fotografía",
+    title: "Momentos editoriales a través de fotogramas cinemáticos fijos.",
+    categories: ['Estilo de Vida', 'Deportes', 'Viajes', 'Retratos'],
     images: [
       '1500534314209-a25ddb2bd429',
       '1494790108377-be9c29b29330',
@@ -67,16 +67,16 @@ export const portfolioData = {
   },
   experience: [
     {
-      year: "2024 - Present",
-      role: "Lead Video Editor",
-      company: "Cinematic Studio",
-      description: "Directing visual storytelling and high-end commercial editing."
+      year: "2024 - Presente",
+      role: "Editor de Video Principal",
+      company: "Estudio Cinemático",
+      description: "Dirigiendo narrativa visual y edición comercial de alta gama."
     },
     {
       year: "2022 - 2024",
-      role: "Content Creator",
+      role: "Creador de Contenido",
       company: "Freelance",
-      description: "Crafting digital experiences for luxury brands worldwide."
+      description: "Creando experiencias digitales para marcas de lujo en todo el mundo."
     }
   ],
   socials: ['Instagram', 'TikTok', 'WhatsApp', 'Behance', 'Email']
