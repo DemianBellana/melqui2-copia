@@ -65,17 +65,17 @@ export default function MelisaQuirogaPortfolio() {
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
-            <div className="absolute bottom-0 left-0 right-0 p-10 flex flex-col lg:flex-row justify-between gap-8 items-end text-white">
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 flex flex-col lg:flex-row justify-between gap-6 md:gap-8 items-start lg:items-end text-white">
               <div>
-                <p className="text-xs tracking-[0.35em] uppercase text-white/50 mb-4">
+                <p className="text-[10px] md:text-xs tracking-[0.35em] uppercase text-white/50 mb-2 md:mb-4">
                   {reels.label}
                 </p>
-                <h3 className="text-4xl font-light max-w-2xl leading-tight">
+                <h3 className="text-2xl md:text-4xl font-light max-w-2xl leading-tight">
                   Ediciones dinámicas con estética editorial de lujo.
                 </h3>
               </div>
 
-              <button className="px-7 py-4 rounded-full border border-white/20 bg-white/10 backdrop-blur-xl hover:bg-white/20 transition-all duration-500 text-sm tracking-[0.25em] uppercase">
+              <button className="px-5 py-3 md:px-7 md:py-4 rounded-full border border-white/20 bg-white/10 backdrop-blur-xl hover:bg-white/20 transition-all duration-500 text-xs md:text-sm tracking-[0.25em] uppercase w-full lg:w-auto mt-2 lg:mt-0 text-center">
                 {reels.cta}
               </button>
             </div>
