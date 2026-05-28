@@ -63,6 +63,8 @@ export const portfolioData = {
       '1524504388940-b1c1722653e1',
       '1516321318423-f06f85e504b3',
       '1504593811423-6dd665756598',
+      '1539109136881-3be0616acf4b',
+      '1469334031218-e382a71b716b',
     ].map(id => `https://images.unsplash.com/photo-${id}?q=80&w=1200&auto=format&fit=crop`)
   },
   experience: [

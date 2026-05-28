@@ -19,9 +19,9 @@ export default function Hero({ data, images }) {
       {/* FLOATING BACKGROUND CARDS */}
       {images && (
         <div className="absolute inset-0 z-[15] overflow-hidden pointer-events-none opacity-80">
-          {images.slice(0, 6).map((img, i) => {
+          {images.slice(0, 8).map((img, i) => {
             const size = 200 + (i % 3) * 50;
-            const topPos = [5, 25, 45, 55, 70, 15][i % 6];
+            const topPos = [5, 25, 45, 55, 70, 15, 35, 80][i % 8];
             const duration = 25 + i * 5;
             const delay = i * -8;
 
@@ -61,15 +61,19 @@ export default function Hero({ data, images }) {
           </div>
 
           <div>
-            <h1 className="text-[4rem] md:text-[7rem] leading-[0.88] font-light tracking-[-0.05em] text-white">
+            <h1 
+              className="text-[4rem] md:text-[7rem] leading-[0.88] font-light tracking-[-0.05em] text-[#7C8F7A]"
+            >
               {data.title.first}
               <br />
-              <span className="italic text-[#F7F3EF]">{data.title.last}</span>
+              <span className="italic">{data.title.last}</span>
             </h1>
           </div>
 
           <div className="max-w-xl space-y-6">
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed font-light">
+            <p 
+              className="text-lg md:text-xl text-[#161616] leading-relaxed font-light"
+            >
               Editor de Video y Creador de Contenido creando piezas visuales emocionales, narrativa cinemática y experiencias digitales modernas.
             </p>
 
