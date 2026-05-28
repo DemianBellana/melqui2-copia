@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import ProjectGrid from './components/ProjectGrid';
 import ExperienceCard from './components/ExperienceCard';
 import ScatteredGallery from './components/ScatteredGallery';
+import Navbar from './components/Navbar';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function MelisaQuirogaPortfolio() {
@@ -12,6 +13,8 @@ export default function MelisaQuirogaPortfolio() {
 
   return (
     <div className="min-h-screen bg-[#F7F3EF] text-[#161616] overflow-x-hidden selection:bg-[#CFA8A1]/30">
+      <Navbar />
+      
       {/* GLOBAL CINEMATIC BACKGROUND */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.04] mix-blend-multiply bg-[url('https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center" />
 
@@ -33,10 +36,12 @@ export default function MelisaQuirogaPortfolio() {
       </div>
 
       {/* HERO */}
-      <Hero data={hero} images={photography.images} />
+      <section id="inicio">
+        <Hero data={hero} images={photography.images} />
+      </section>
 
       {/* REELS SECTION */}
-      <section className="relative py-32 px-6 md:px-14 bg-[#F7F3EF]">
+      <section id="trabajo" className="relative py-32 px-6 md:px-14 bg-[#F7F3EF]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 flex flex-col lg:flex-row justify-between gap-10 items-end">
             <div>
@@ -125,7 +130,7 @@ export default function MelisaQuirogaPortfolio() {
       </section>
 
       {/* PHOTOGRAPHY */}
-      <section className="py-32 px-6 md:px-14 bg-[#EFE7E2]">
+      <section id="fotografia" className="py-32 px-6 md:px-14 bg-[#EFE7E2]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-20 flex flex-col lg:flex-row justify-between gap-8 items-end">
             <div>
@@ -212,7 +217,7 @@ export default function MelisaQuirogaPortfolio() {
       </AnimatePresence>
 
       {/* ABOUT */}
-      <section className="py-32 px-6 md:px-14 bg-[#F7F3EF]">
+      <section id="sobre-mi" className="py-32 px-6 md:px-14 bg-[#F7F3EF]">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
           <div className="relative">
             <div className="absolute -inset-8 rounded-[3rem] bg-[#D8B7B0]/20 blur-3xl" />
@@ -253,7 +258,7 @@ export default function MelisaQuirogaPortfolio() {
       </section>
 
       {/* CONTACT */}
-      <section className="relative py-32 px-6 md:px-14 bg-[#D8B7B0] text-[#161616] overflow-hidden">
+      <section id="contacto" className="relative py-32 px-6 md:px-14 bg-[#D8B7B0] text-[#161616] overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(247,243,239,0.4),transparent_60%)]" />
 
         <div className="relative max-w-5xl mx-auto text-center">
