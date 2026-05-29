@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { portfolioData } from './data/portfolio';
 import Hero from './components/Hero';
 import ProjectGrid from './components/ProjectGrid';
@@ -19,6 +19,60 @@ export default function MelisaQuirogaPortfolio() {
   const filteredPhotos = photoCategory === 'Todas'
     ? photography.items
     : photography.items.filter(item => item.category === photoCategory);
+
+  // MOBILE SLIDER LOGIC
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    startTimer();
+    return () => stopTimer();
+  }, [currentIndex, filteredPhotos.length]);
+
+  const startTimer = () => {
+    stopTimer();
+    timerRef.current = setInterval(() => {
+      setDirection(1); // Auto-advance is always forward
+      setCurrentIndex((prev) => (prev + 1) % filteredPhotos.length);
+    }, 5000);
+  };
+
+  const stopTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+  };
+
+  const handleDragEnd = (event, info) => {
+    const threshold = 50;
+    if (info.offset.x < -threshold) {
+      setDirection(1); // Moving forward
+      setCurrentIndex((prev) => (prev + 1) % filteredPhotos.length);
+    } else if (info.offset.x > threshold) {
+      setDirection(-1); // Moving backward
+      setCurrentIndex((prev) => (prev - 1 + filteredPhotos.length) % filteredPhotos.length);
+    }
+    startTimer();
+  };
+
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+      rotateY: direction > 0 ? 15 : -15
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+      rotateY: 0
+    },
+    exit: (direction) => ({
+      zIndex: 0,
+      x: direction < 0 ? 300 : -300,
+      opacity: 0,
+      rotateY: direction < 0 ? 15 : -15
+    })
+  };
 
   return (
     <div className="min-h-screen bg-[#F7F3EF] text-[#161616] overflow-x-hidden selection:bg-[#CFA8A1]/30">
@@ -137,8 +191,8 @@ export default function MelisaQuirogaPortfolio() {
         </div>
       </section>
 
-      {/* 3. PHOTOGRAPHY (Categorized) */}
-      <section id="fotografia" className="py-32 px-6 md:px-14 bg-[#EFE7E2]">
+      {/* 3. PHOTOGRAPHY (Categorized + Mobile Slider) */}
+      <section id="fotografia" className="py-32 px-6 md:px-14 bg-[#EFE7E2] overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="mb-20 flex flex-col lg:flex-row justify-between gap-8 items-end">
             <div>
@@ -156,7 +210,10 @@ export default function MelisaQuirogaPortfolio() {
               {['Todas', ...photography.categories].map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => setPhotoCategory(cat)}
+                  onClick={() => {
+                    setPhotoCategory(cat);
+                    setCurrentIndex(0); // Reset slider
+                  }}
                   className={`px-5 py-3 rounded-full border transition-all duration-500 ${
                     photoCategory === cat 
                       ? 'bg-[#7C8F7A] text-white border-[#7C8F7A]' 
@@ -169,36 +226,98 @@ export default function MelisaQuirogaPortfolio() {
             </div>
           </div>
 
-          <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            <AnimatePresence mode='popLayout'>
-              {filteredPhotos.map((item, i) => (
+          {/* DESKTOP GRID */}
+          <div className="hidden md:block">
+            <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+              <AnimatePresence mode='popLayout'>
+                {filteredPhotos.map((item, i) => (
+                  <motion.div
+                    key={item.image}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.4 }}
+                    onClick={() => setSelectedImage({ url: item.image, id: i })}
+                    className="relative overflow-hidden rounded-[2rem] group break-inside-avoid cursor-pointer"
+                  >
+                    <img
+                      src={item.image}
+                      loading="lazy"
+                      className="w-full object-cover group-hover:scale-105 transition-all duration-[2000ms]"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-700" />
+                    
+                    <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <span className="px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-[10px] uppercase tracking-widest text-white">
+                        {item.category}
+                      </span>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+
+          {/* MOBILE TOUCH SLIDER */}
+          <div className="md:hidden relative px-4">
+            <div className="relative h-[65vh] w-full perspective-1000">
+              <AnimatePresence mode="popLayout" custom={direction}>
                 <motion.div
-                  key={item.image}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
-                  onClick={() => setSelectedImage({ url: item.image, id: i })}
-                  className="relative overflow-hidden rounded-[2rem] group break-inside-avoid cursor-pointer"
+                  key={filteredPhotos[currentIndex]?.image}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.2 },
+                    rotateY: { duration: 0.4 }
+                  }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={1}
+                  onDragStart={stopTimer}
+                  onDragEnd={handleDragEnd}
+                  className="absolute inset-0 rounded-[2.5rem] overflow-hidden shadow-2xl cursor-grab active:cursor-grabbing"
                 >
                   <img
-                    src={item.image}
-                    loading="lazy"
-                    className="w-full object-cover group-hover:scale-105 transition-all duration-[2000ms]"
+                    src={filteredPhotos[currentIndex]?.image}
+                    className="w-full h-full object-cover pointer-events-none"
+                    alt=""
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-700" />
-                  
-                  {/* Category Tag on Hover */}
-                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-[10px] uppercase tracking-widest text-white">
-                      {item.category}
+                  <div className="absolute top-6 left-6">
+                    <span className="px-4 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/20 text-[9px] uppercase tracking-widest text-white">
+                      {filteredPhotos[currentIndex]?.category}
                     </span>
                   </div>
                 </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* VISUAL INDICATOR (PROGRESS BAR + COUNTER) */}
+            <div className="mt-12 flex flex-col items-center gap-6">
+              <div className="flex gap-2 h-1 w-full max-w-[200px]">
+                {filteredPhotos.map((_, i) => (
+                  <div key={i} className="flex-1 h-full bg-black/5 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={false}
+                      animate={{ 
+                        width: i === currentIndex ? "100%" : i < currentIndex ? "100%" : "0%" 
+                      }}
+                      className="h-full bg-[#7C8F7A]"
+                      transition={{ duration: 0.3 }}
+                    />
+                  </div>
+                ))}
+              </div>
+              
+              <div className="text-[10px] tracking-[0.4em] uppercase text-[#161616]/40 font-medium">
+                <span className="text-[#161616]">{currentIndex + 1}</span> / {filteredPhotos.length}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -339,6 +458,7 @@ export default function MelisaQuirogaPortfolio() {
         .social-item a:hover .icon { color: #fff; transform: rotateY(360deg); }
         .social-item a:before { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 100%; background: var(--hover-bg); transition: .5s; z-index: 2; }
         .social-item a:hover:before { top: 0; }
+        .perspective-1000 { perspective: 1000px; }
       `}</style>
     </div>
   )
