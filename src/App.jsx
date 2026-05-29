@@ -2,14 +2,23 @@ import React, { useState } from 'react';
 import { portfolioData } from './data/portfolio';
 import Hero from './components/Hero';
 import ProjectGrid from './components/ProjectGrid';
-import ExperienceCard from './components/ExperienceCard';
-import ScatteredGallery from './components/ScatteredGallery';
 import Navbar from './components/Navbar';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function MelisaQuirogaPortfolio() {
-  const { personal, hero, reels, videoWork, photography, experience, socials } = portfolioData;
+  const { personal, hero, reels, videoWork, photography, socials } = portfolioData;
   const [selectedImage, setSelectedImage] = useState(null);
+  const [videoCategory, setVideoCategory] = useState('Todas');
+  const [photoCategory, setPhotoCategory] = useState('Todas');
+
+  // Logic for category filtering
+  const filteredVideos = videoCategory === 'Todas' 
+    ? videoWork.items 
+    : videoWork.items.filter(item => item.category === videoCategory);
+
+  const filteredPhotos = photoCategory === 'Todas'
+    ? photography.items
+    : photography.items.filter(item => item.category === photoCategory);
 
   return (
     <div className="min-h-screen bg-[#F7F3EF] text-[#161616] overflow-x-hidden selection:bg-[#CFA8A1]/30">
@@ -30,22 +39,22 @@ export default function MelisaQuirogaPortfolio() {
         </div>
       </div>
 
-      {/* CUSTOM CURSOR */}
+      {/* CUSTOM CURSOR ROLE */}
       <div className="hidden lg:block fixed top-6 right-6 z-40 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-full bg-white/10 text-xs tracking-[0.3em] uppercase text-[#161616]">
         {personal.role}
       </div>
 
-      {/* HERO */}
+      {/* 0. HERO */}
       <section id="inicio">
-        <Hero data={hero} images={photography.images} />
+        <Hero data={hero} images={photography.items.map(p => p.image)} />
       </section>
 
-      {/* REELS SECTION */}
-      <section id="trabajo" className="relative py-32 px-6 md:px-14 bg-[#F7F3EF]">
+      {/* 1. EDICIÓN DE REELS */}
+      <section id="reels" className="relative py-32 px-6 md:px-14 bg-[#F7F3EF]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 flex flex-col lg:flex-row justify-between gap-10 items-end">
             <div>
-              <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6">
+              <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6 font-bold">
                 {reels.tag}
               </p>
 
@@ -90,51 +99,50 @@ export default function MelisaQuirogaPortfolio() {
         </div>
       </section>
 
-      {/* VIDEO WORK (PROJECT GRID) */}
-      <section className="relative py-32 px-6 md:px-14 bg-[#161616] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(216,183,176,0.15),transparent_35%)]" />
-
+      {/* 2. VIDEO WORK (Categorized) */}
+      <section id="video-work" className="relative py-32 px-6 md:px-14 bg-[#D8B7B0] text-[#161616] overflow-hidden">
         <div className="relative max-w-7xl mx-auto">
-          <div className="mb-20">
-            <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6">
-              {videoWork.tag}
-            </p>
+          <div className="mb-20 flex flex-col lg:flex-row justify-between gap-10 items-end">
+            <div>
+              <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6 font-bold">
+                {videoWork.tag}
+              </p>
 
-            <h2 className="text-5xl md:text-7xl font-light tracking-[-0.05em] max-w-5xl leading-[0.95]">
-              {videoWork.title}
-            </h2>
+              <h2 className="text-5xl md:text-7xl font-light tracking-[-0.05em] max-w-5xl leading-[0.95]">
+                {videoWork.title}
+              </h2>
+            </div>
+
+            {/* VIDEO CATEGORIES */}
+            <div className="flex gap-3 flex-wrap text-[10px] md:text-xs uppercase tracking-[0.2em]">
+              {['Todas', ...videoWork.categories].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setVideoCategory(cat)}
+                  className={`px-5 py-3 rounded-full border transition-all duration-500 ${
+                    videoCategory === cat 
+                      ? 'bg-[#161616] text-white border-[#161616]' 
+                      : 'border-black/10 bg-white/20 hover:bg-white/40'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <ProjectGrid projects={videoWork.items} />
+          <motion.div layout>
+            <ProjectGrid projects={filteredVideos} />
+          </motion.div>
         </div>
       </section>
 
-      {/* TIMELINE / EXPERIENCE */}
-      <section className="py-32 px-6 md:px-14 bg-[#F7F3EF]">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-20">
-            <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6">
-              Experiencia
-            </p>
-            <h2 className="text-5xl md:text-7xl font-light tracking-[-0.05em] leading-[0.92] max-w-4xl">
-              Trayectoria profesional en edición cinemática.
-            </h2>
-          </div>
-
-          <div className="max-w-3xl">
-            {experience.map((exp, i) => (
-              <ExperienceCard key={i} experience={exp} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PHOTOGRAPHY */}
+      {/* 3. PHOTOGRAPHY (Categorized) */}
       <section id="fotografia" className="py-32 px-6 md:px-14 bg-[#EFE7E2]">
         <div className="max-w-7xl mx-auto">
           <div className="mb-20 flex flex-col lg:flex-row justify-between gap-8 items-end">
             <div>
-              <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6">
+              <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6 font-bold">
                 {photography.tag}
               </p>
 
@@ -143,40 +151,58 @@ export default function MelisaQuirogaPortfolio() {
               </h2>
             </div>
 
-            <div className="flex gap-3 flex-wrap text-sm uppercase tracking-[0.25em]">
-              {photography.categories.map((cat) => (
-                <div
+            {/* PHOTO CATEGORIES */}
+            <div className="flex gap-3 flex-wrap text-[10px] md:text-xs uppercase tracking-[0.2em]">
+              {['Todas', ...photography.categories].map((cat) => (
+                <button
                   key={cat}
-                  className="px-5 py-3 rounded-full border border-black/10 bg-white/50 backdrop-blur-xl"
+                  onClick={() => setPhotoCategory(cat)}
+                  className={`px-5 py-3 rounded-full border transition-all duration-500 ${
+                    photoCategory === cat 
+                      ? 'bg-[#7C8F7A] text-white border-[#7C8F7A]' 
+                      : 'border-black/10 bg-white/50 backdrop-blur-xl hover:bg-[#7C8F7A]/10'
+                  }`}
                 >
                   {cat}
-                </div>
+                </button>
               ))}
             </div>
           </div>
 
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            {photography.images.map((img, i) => (
-              <motion.div
-                key={i}
-                layoutId={`img-${i}`}
-                onClick={() => setSelectedImage({ url: img, id: i })}
-                className="relative overflow-hidden rounded-[2rem] group break-inside-avoid cursor-pointer"
-              >
-                <img
-                  src={img}
-                  loading="lazy"
-                  className="w-full object-cover group-hover:scale-105 transition-all duration-[2000ms]"
-                />
-
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-700" />
-              </motion.div>
-            ))}
-          </div>
+          <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+            <AnimatePresence mode='popLayout'>
+              {filteredPhotos.map((item, i) => (
+                <motion.div
+                  key={item.image}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4 }}
+                  onClick={() => setSelectedImage({ url: item.image, id: i })}
+                  className="relative overflow-hidden rounded-[2rem] group break-inside-avoid cursor-pointer"
+                >
+                  <img
+                    src={item.image}
+                    loading="lazy"
+                    className="w-full object-cover group-hover:scale-105 transition-all duration-[2000ms]"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-700" />
+                  
+                  {/* Category Tag on Hover */}
+                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span className="px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-[10px] uppercase tracking-widest text-white">
+                      {item.category}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         </div>
       </section>
 
-      {/* LIGHTBOX / IMAGE EXPANSION */}
+      {/* LIGHTBOX */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div 
@@ -185,7 +211,6 @@ export default function MelisaQuirogaPortfolio() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 pointer-events-auto"
           >
-            {/* Backdrop with blur */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -193,8 +218,6 @@ export default function MelisaQuirogaPortfolio() {
               onClick={() => setSelectedImage(null)}
               className="absolute inset-0 bg-[#F7F3EF]/60 backdrop-blur-2xl"
             />
-
-            {/* Expanded Image Container */}
             <motion.div
               layoutId={`img-${selectedImage.id}`}
               className="relative z-10 w-full max-w-6xl aspect-[4/5] md:aspect-auto md:h-[85vh] rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.2)]"
@@ -204,7 +227,6 @@ export default function MelisaQuirogaPortfolio() {
                 className="w-full h-full object-cover md:object-contain bg-[#161616]/5"
                 alt=""
               />
-              
               <button 
                 onClick={() => setSelectedImage(null)}
                 className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-[#161616] hover:bg-white/20 transition-colors"
@@ -216,12 +238,11 @@ export default function MelisaQuirogaPortfolio() {
         )}
       </AnimatePresence>
 
-      {/* ABOUT */}
+      {/* 4. SOBRE MÍ */}
       <section id="sobre-mi" className="py-32 px-6 md:px-14 bg-[#F7F3EF]">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
           <div className="relative">
             <div className="absolute -inset-8 rounded-[3rem] bg-[#D8B7B0]/20 blur-3xl" />
-
             <img
               src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1600&auto=format&fit=crop"
               loading="lazy"
@@ -230,25 +251,21 @@ export default function MelisaQuirogaPortfolio() {
           </div>
 
           <div>
-            <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6">
+            <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] mb-6 font-bold">
               Sobre Mí
             </p>
-
             <h2 className="text-5xl md:text-7xl font-light tracking-[-0.05em] leading-[0.95] mb-10">
               Narrativa visual con emoción y sensibilidad cinemática.
             </h2>
-
             <div className="space-y-6 text-lg text-[#161616]/70 leading-relaxed">
               {personal.bio.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
             </div>
-
             <div className="mt-10 flex gap-4 flex-wrap">
               <button className="px-7 py-4 rounded-full bg-[#161616] text-white hover:bg-black transition-all duration-500 text-sm tracking-[0.25em] uppercase">
                 Descargar Portafolio
               </button>
-
               <button className="px-7 py-4 rounded-full border border-black/10 bg-white hover:bg-[#EFE7E2] transition-all duration-500 text-sm tracking-[0.25em] uppercase">
                 Hablemos
               </button>
@@ -257,19 +274,16 @@ export default function MelisaQuirogaPortfolio() {
         </div>
       </section>
 
-      {/* CONTACT */}
+      {/* 5. CONTACTO */}
       <section id="contacto" className="relative py-32 px-6 md:px-14 bg-[#D8B7B0] text-[#161616] overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(247,243,239,0.4),transparent_60%)]" />
-
         <div className="relative max-w-5xl mx-auto text-center">
           <p className="text-sm tracking-[0.35em] uppercase text-[#7C8F7A] font-bold mb-6">
             Contacto
           </p>
-
           <h2 className="text-5xl md:text-7xl font-light tracking-[-0.05em] leading-[0.92] mb-10 text-[#161616]">
             Creemos algo visualmente inolvidable.
           </h2>
-
           <p className="text-[#161616]/70 text-lg max-w-2xl mx-auto mb-14 leading-relaxed">
             Disponible para colaboraciones creativas, contenido de marca, edición cinemática y proyectos de narrativa visual a nivel mundial.
           </p>
@@ -279,38 +293,15 @@ export default function MelisaQuirogaPortfolio() {
               let iconClass = '';
               let hoverColor = '';
               let displayItem = item;
-              
-              // Map Behance to Facebook as requested
-              if (item.toLowerCase() === 'behance') {
-                displayItem = 'Facebook';
-              }
-
+              if (item.toLowerCase() === 'behance') displayItem = 'Facebook';
               switch(displayItem.toLowerCase()) {
-                case 'instagram': 
-                  iconClass = 'fa-brands fa-instagram'; 
-                  hoverColor = '#e1306c';
-                  break;
-                case 'tiktok': 
-                  iconClass = 'fa-brands fa-tiktok'; 
-                  hoverColor = '#000000'; // Black background on hover
-                  break;
-                case 'whatsapp': 
-                  iconClass = 'fa-brands fa-whatsapp'; 
-                  hoverColor = '#25d366';
-                  break;
-                case 'facebook':
-                  iconClass = 'fa-brands fa-facebook-f';
-                  hoverColor = '#3b5999';
-                  break;
-                case 'email': 
-                  iconClass = 'fa-solid fa-envelope'; 
-                  hoverColor = '#dd4b39';
-                  break;
-                default:
-                  iconClass = 'fa-solid fa-share-nodes';
-                  hoverColor = '#f00';
+                case 'instagram': iconClass = 'fa-brands fa-instagram'; hoverColor = '#e1306c'; break;
+                case 'tiktok': iconClass = 'fa-brands fa-tiktok'; hoverColor = '#000000'; break;
+                case 'whatsapp': iconClass = 'fa-brands fa-whatsapp'; hoverColor = '#25d366'; break;
+                case 'facebook': iconClass = 'fa-brands fa-facebook-f'; hoverColor = '#3b5999'; break;
+                case 'email': iconClass = 'fa-solid fa-envelope'; hoverColor = '#dd4b39'; break;
+                default: iconClass = 'fa-solid fa-share-nodes'; hoverColor = '#f00';
               }
-
               return (
                 <div key={item} className="social-item">
                   <a href="#" style={{ "--hover-bg": hoverColor }}>
@@ -322,22 +313,9 @@ export default function MelisaQuirogaPortfolio() {
           </div>
 
           <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-6 text-left">
-            <input
-              placeholder="Tu Nombre"
-              className="bg-[#F7F3EF] border border-[#7C8F7A]/20 rounded-2xl px-6 py-5 outline-none placeholder:text-[#161616]/40 text-[#161616] focus:border-[#7C8F7A] transition-colors"
-            />
-
-            <input
-              placeholder="Tu Correo"
-              className="bg-[#F7F3EF] border border-[#7C8F7A]/20 rounded-2xl px-6 py-5 outline-none placeholder:text-[#161616]/40 text-[#161616] focus:border-[#7C8F7A] transition-colors"
-            />
-
-            <textarea
-              placeholder="Contame sobre tu proyecto"
-              rows={6}
-              className="md:col-span-2 bg-[#F7F3EF] border border-[#7C8F7A]/20 rounded-[2rem] px-6 py-5 outline-none placeholder:text-[#161616]/40 text-[#161616] focus:border-[#7C8F7A] transition-colors"
-            />
-
+            <input placeholder="Tu Nombre" className="bg-[#F7F3EF] border border-[#7C8F7A]/20 rounded-2xl px-6 py-5 outline-none placeholder:text-[#161616]/40 text-[#161616] focus:border-[#7C8F7A] transition-colors" />
+            <input placeholder="Tu Correo" className="bg-[#F7F3EF] border border-[#7C8F7A]/20 rounded-2xl px-6 py-5 outline-none placeholder:text-[#161616]/40 text-[#161616] focus:border-[#7C8F7A] transition-colors" />
+            <textarea placeholder="Contame sobre tu proyecto" rows={6} className="md:col-span-2 bg-[#F7F3EF] border border-[#7C8F7A]/20 rounded-[2rem] px-6 py-5 outline-none placeholder:text-[#161616]/40 text-[#161616] focus:border-[#7C8F7A] transition-colors" />
             <button className="md:col-span-2 px-8 py-5 rounded-full bg-[#7C8F7A] hover:bg-[#6B7A69] transition-all duration-500 text-[#F7F3EF] text-sm tracking-[0.25em] uppercase font-medium">
               Enviar Consulta
             </button>
@@ -352,70 +330,15 @@ export default function MelisaQuirogaPortfolio() {
       </footer>
 
       <style>{`
-        @keyframes loader {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(0%); }
-        }
-
-        @keyframes fadeout {
-          to {
-            opacity: 0;
-            visibility: hidden;
-          }
-        }
-
-        html {
-          scroll-behavior: smooth;
-        }
-
-        body {
-          background: #F7F3EF;
-          overflow-x: hidden;
-        }
-
-        .social-item a {
-          width: 70px;
-          height: 70px;
-          background-color: #F7F3EF;
-          text-align: center;
-          line-height: 70px;
-          font-size: 28px;
-          display: block;
-          border-radius: 50%;
-          position: relative;
-          overflow: hidden;
-          border: 3px solid #F7F3EF;
-          z-index: 1;
-          transition: .5s;
-        }
-
-        .social-item a .icon {
-          position: relative;
-          color: #7C8F7A;
-          transition: .5s;
-          z-index: 3;
-        }
-
-        .social-item a:hover .icon {
-          color: #fff;
-          transform: rotateY(360deg);
-        }
-
-        .social-item a:before {
-          content: "";
-          position: absolute;
-          top: 100%;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: var(--hover-bg);
-          transition: .5s;
-          z-index: 2;
-        }
-
-        .social-item a:hover:before {
-          top: 0;
-        }
+        @keyframes loader { 0% { transform: translateX(-100%); } 100% { transform: translateX(0%); } }
+        @keyframes fadeout { to { opacity: 0; visibility: hidden; } }
+        html { scroll-behavior: smooth; }
+        body { background: #F7F3EF; overflow-x: hidden; }
+        .social-item a { width: 70px; height: 70px; background-color: #F7F3EF; text-align: center; line-height: 70px; font-size: 28px; display: block; border-radius: 50%; position: relative; overflow: hidden; border: 3px solid #F7F3EF; z-index: 1; transition: .5s; }
+        .social-item a .icon { position: relative; color: #7C8F7A; transition: .5s; z-index: 3; }
+        .social-item a:hover .icon { color: #fff; transform: rotateY(360deg); }
+        .social-item a:before { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 100%; background: var(--hover-bg); transition: .5s; z-index: 2; }
+        .social-item a:hover:before { top: 0; }
       `}</style>
     </div>
   )

@@ -5,6 +5,9 @@ export default function Hero({ data, images }) {
   return (
     <section className="relative min-h-screen flex items-center px-6 md:px-14 py-24 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-[#F7F3EF] z-10" />
+      
+      {/* VIGNETTE FOR TEXT READABILITY */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(0,0,0,0.15),transparent_50%)] z-[11] pointer-events-none" />
 
       <video
         autoPlay
@@ -21,9 +24,10 @@ export default function Hero({ data, images }) {
         <div className="absolute inset-0 z-[15] overflow-hidden pointer-events-none opacity-80">
           {images.slice(0, 8).map((img, i) => {
             const size = 200 + (i % 3) * 50;
-            const topPos = [5, 25, 45, 55, 70, 15, 35, 80][i % 8];
-            const duration = 25 + i * 5;
-            const delay = i * -8;
+            const topPos = [5, 30, 55, 15, 80, 40, 65, 10][i % 8];
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+            const duration = isMobile ? (25 + i * 5) : (35 + i * 4);
+            const delay = isMobile ? (i * -8) : (i * -16);
 
             return (
               <motion.img
@@ -38,7 +42,7 @@ export default function Hero({ data, images }) {
                   left: '-30vw'
                 }}
                 animate={{
-                  x: ['0vw', '140vw'],
+                  x: ['0vw', '160vw'],
                   rotate: [0, i % 2 === 0 ? 5 : -5]
                 }}
                 transition={{
@@ -55,14 +59,14 @@ export default function Hero({ data, images }) {
 
       <div className="relative z-20 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-end">
         <div className="space-y-8">
-          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-5 py-2 text-white text-xs tracking-[0.3em] uppercase">
+          <div className="inline-flex items-center gap-3 bg-[#D8B7B0] border border-white/20 rounded-full px-5 py-2 text-[#161616] text-xs tracking-[0.3em] uppercase shadow-lg">
             {data.subtitle}
             <span className="w-2 h-2 rounded-full bg-[#7C8F7A] animate-pulse" />
           </div>
 
           <div>
             <h1 
-              className="text-[4rem] md:text-[7rem] leading-[0.88] font-light tracking-[-0.05em] text-[#7C8F7A]"
+              className="text-[4rem] md:text-[7rem] leading-[0.88] font-light tracking-[-0.05em] text-black"
             >
               {data.title.first}
               <br />
@@ -78,11 +82,11 @@ export default function Hero({ data, images }) {
             </p>
 
             <div className="flex gap-4 flex-wrap">
-              <button className="px-7 py-4 rounded-full bg-[#161616] hover:bg-[#161616]/90 transition-all duration-500 text-[#F7F3EF] text-sm tracking-[0.25em] uppercase">
+              <button className="px-7 py-4 rounded-full bg-[#161616] hover:bg-[#161616]/90 hover:scale-105 transition-all duration-500 text-[#F7F3EF] text-sm tracking-[0.25em] uppercase shadow-xl">
                 Explorar Trabajo
               </button>
 
-              <button className="px-7 py-4 rounded-full border border-white/30 bg-white/10 backdrop-blur-xl hover:bg-white/20 transition-all duration-500 text-white text-sm tracking-[0.25em] uppercase">
+              <button className="px-7 py-4 rounded-full bg-[#7C8F7A] hover:bg-[#6B7A69] hover:scale-105 transition-all duration-500 text-white text-sm tracking-[0.25em] uppercase shadow-xl">
                 Contacto
               </button>
             </div>
