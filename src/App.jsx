@@ -128,6 +128,7 @@ export default function MelisaQuirogaPortfolio() {
               muted
               loop
               playsInline
+              poster="/imgburbujas.png"
               className="w-full aspect-video object-cover group-hover:scale-[1.02] transition-all duration-[2000ms]"
             >
               <source src={reels.showcaseVideo} type="video/mp4" />

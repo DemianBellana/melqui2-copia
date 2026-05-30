@@ -48,8 +48,10 @@ export default function Navbar() {
     <>
       <nav 
         className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 px-6 md:px-14 ${
-          isScrolled ? 'py-4' : 'py-8'
-        } bg-transparent`}
+          isScrolled 
+            ? 'py-4 bg-white/80 backdrop-blur-lg shadow-sm lg:bg-transparent lg:backdrop-blur-none lg:shadow-none' 
+            : 'py-8 bg-transparent'
+        }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center relative">
           
@@ -57,8 +59,8 @@ export default function Navbar() {
             M. Quiroga
           </a>
 
-          {/* DESKTOP NAV - BACKGROUND ONLY HERE WHEN SCROLLED */}
-          <div className={`hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-10 border transition-all duration-500 px-8 py-3 rounded-full shadow-lg ${
+          {/* DESKTOP NAV - APPAREANCE CHANGED FROM md TO lg FOR BETTER TABLET SUPPORT */}
+          <div className={`hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-10 border transition-all duration-500 px-8 py-3 rounded-full shadow-lg ${
             isScrolled 
               ? 'bg-white/70 backdrop-blur-md border-white/20' 
               : 'bg-white/5 backdrop-blur-md border-white/10'
@@ -80,10 +82,10 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* MOBILE BUTTON - UNCHANGED */}
+          {/* MOBILE/TABLET BUTTON - APPAREANCE CHANGED FROM md:hidden TO lg:hidden */}
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden z-[70] flex flex-col gap-1.5 items-end group"
+            className="lg:hidden z-[70] flex flex-col gap-1.5 items-end group"
           >
             <span className={`h-[1.5px] bg-[#161616] transition-all duration-300 ${isMobileMenuOpen ? 'w-8 rotate-45 translate-y-2' : 'w-8'}`} />
             <span className={`h-[1.5px] bg-[#161616] transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : 'w-5'}`} />
@@ -92,7 +94,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* MOBILE OVERLAY MENU - UNCHANGED */}
+      {/* MOBILE/TABLET OVERLAY MENU - APPAREANCE CHANGED FROM md:hidden TO lg:hidden */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -100,7 +102,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[65] bg-[#F7F3EF]/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 z-[65] bg-[#F7F3EF]/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 lg:hidden"
           >
             {navLinks.map((link, i) => (
               <motion.div
