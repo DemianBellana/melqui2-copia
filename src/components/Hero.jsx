@@ -22,14 +22,14 @@ export default function Hero({ data, images }) {
           {images.slice(0, 8).map((img, i) => {
             // Responsive sizes for floating cards
             const baseSize = typeof window !== 'undefined' 
-              ? (window.innerWidth < 768 ? 190 : (window.innerWidth < 1366 ? 260 : 280))
-              : 260;
-            const size = baseSize + (i % 3) * 70;
+              ? (window.innerWidth < 768 ? 180 : (window.innerWidth < 1366 ? 240 : 255))
+              : 240;
+            const size = baseSize + (i % 3) * 60;
             
-            const topPos = [5, 30, 55, 15, 80, 40, 65, 10][i % 8];
+            const topPos = [8, 28, 48, 15, 68, 38, 58, 12][i % 8];
             const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
             const duration = isMobile ? (25 + i * 5) : (35 + i * 4);
-            const delay = isMobile ? (i * -8) : (i * -16);
+            const delay = isMobile ? (i * -12) : (i * -16);
 
             return (
               <motion.img
@@ -99,7 +99,7 @@ export default function Hero({ data, images }) {
         </div>
 
         <div className="hidden lg:flex justify-end">
-          <div className="relative w-[320px] h-[480px] xl:w-[420px] xl:h-[620px] rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl backdrop-blur-2xl bg-white/5">
+          <div className="relative w-[280px] h-[420px] xl:w-[380px] xl:h-[560px] rounded-[3rem] overflow-hidden border border-white/20 shadow-2xl backdrop-blur-2xl bg-white/5">
             <video
               autoPlay
               muted
