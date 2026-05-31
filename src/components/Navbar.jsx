@@ -59,8 +59,8 @@ export default function Navbar() {
             M. Quiroga
           </a>
 
-          {/* DESKTOP NAV - APPAREANCE CHANGED FROM md TO lg FOR BETTER TABLET SUPPORT */}
-          <div className={`hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-10 border transition-all duration-500 px-8 py-3 rounded-full shadow-lg ${
+          {/* DESKTOP NAV - OPTIMIZED FOR 1366px + LARGE SCREENS */}
+          <div className={`hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-4 xl:gap-10 border transition-all duration-500 px-5 xl:px-8 py-3 rounded-full shadow-lg ${
             isScrolled 
               ? 'bg-white/70 backdrop-blur-md border-white/20' 
               : 'bg-white/5 backdrop-blur-md border-white/10'
@@ -70,7 +70,7 @@ export default function Navbar() {
                 key={link.name}
                 href={`#${link.id}`}
                 onClick={(e) => handleNavClick(e, link.id)}
-                className={`relative text-[11px] tracking-[0.2em] uppercase transition-colors duration-300 group ${
+                className={`relative text-[10px] xl:text-[11px] tracking-[0.2em] uppercase transition-colors duration-300 group whitespace-nowrap ${
                   activeSection === link.id ? 'text-[#7C8F7A]' : 'text-[#161616]/70 hover:text-[#7C8F7A]'
                 }`}
               >

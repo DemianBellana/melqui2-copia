@@ -10,6 +10,12 @@ export default function MelisaQuirogaPortfolio() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [videoCategory, setVideoCategory] = useState('Todas');
   const [photoCategory, setPhotoCategory] = useState('Todas');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2800);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Logic for category filtering
   const filteredVideos = videoCategory === 'Todas' 
@@ -76,13 +82,13 @@ export default function MelisaQuirogaPortfolio() {
 
   return (
     <div className="min-h-screen bg-[#F7F3EF] text-[#161616] overflow-x-hidden selection:bg-[#CFA8A1]/30">
-      <Navbar />
+      {!isLoading && <Navbar />}
       
       {/* GLOBAL CINEMATIC BACKGROUND */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.04] mix-blend-multiply bg-[url('https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center" />
 
       {/* LOADER */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#161616] animate-[fadeout_1.6s_ease_2.2s_forwards]">
+      <div className="fixed inset-0 z-[80] flex items-center justify-center bg-[#161616] animate-[fadeout_1.6s_ease_2.2s_forwards]">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl tracking-[0.4em] uppercase text-[#F7F3EF] font-light mb-6">
             {personal.name}
@@ -93,10 +99,12 @@ export default function MelisaQuirogaPortfolio() {
         </div>
       </div>
 
-      {/* CUSTOM CURSOR ROLE */}
-      <div className="hidden lg:block fixed top-6 right-6 z-40 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-full bg-white/10 text-xs tracking-[0.3em] uppercase text-[#161616]">
-        {personal.role}
-      </div>
+      {/* CUSTOM CURSOR ROLE - POSITIONED SLIGHTLY HIGHER ON LAPTOPS */}
+      {!isLoading && (
+        <div className="hidden lg:block fixed top-20 2xl:top-8 right-6 2xl:right-14 z-40 backdrop-blur-xl border border-white/20 px-5 py-2.5 rounded-full bg-[#D8B7B0] text-[10px] tracking-[0.3em] uppercase text-[#161616] whitespace-nowrap shadow-lg">
+          {personal.role}
+        </div>
+      )}
 
       {/* 0. HERO */}
       <section id="inicio">
