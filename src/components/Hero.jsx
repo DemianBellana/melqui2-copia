@@ -21,8 +21,10 @@ export default function Hero({ data, images }) {
         <div className="absolute inset-0 z-[15] overflow-hidden pointer-events-none opacity-100">
           {images.slice(0, 8).map((img, i) => {
             // Responsive sizes for floating cards
-            const baseSize = typeof window !== 'undefined' && window.innerWidth < 1440 ? 150 : 200;
-            const size = baseSize + (i % 3) * 40;
+            const baseSize = typeof window !== 'undefined' 
+              ? (window.innerWidth < 768 ? 190 : (window.innerWidth < 1366 ? 260 : 280))
+              : 260;
+            const size = baseSize + (i % 3) * 70;
             
             const topPos = [5, 30, 55, 15, 80, 40, 65, 10][i % 8];
             const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
